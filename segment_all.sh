@@ -15,9 +15,15 @@ name="mri.nii.gz"
 for d in $work_dir//$prefix_subdirs*; do
     echo "$d"
     echo "$d/$name"
-
-#    ./bfc.sh $d $d/$name
-#    ./preregister.sh $d bfc.nii.gz $refer $labels
+#    RESULT MASK FOR Bias field correction
     python3 remove_backgr_mouse.py $d/mri.nii.gz $d 0.12
-#    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d
+#    BIAS FIELD CORRECTION
+    ./bfc.sh $d $d/mri.nii.gz $d/mri_bfc_mask_test.nii.gz
+#
+#    SEGMENTS IMAGE
+    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d
+#    FILL HOLES
+    python3 fill_holes.py $d output.nii.gz output2.nii.gz 10
+#    CALCULATE DICE SCORES
+    python3 dice_scores.py $d mask.nii.gz output2.nii.gz $work_dir
 done

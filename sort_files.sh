@@ -12,13 +12,15 @@ for d in $work_dir/RARE/*; do
     echo "$d"
     stri=${d#$rare}
     stri=${stri%.nii.gz}
-#    stri=${c#rare}
+    stri=${stri%_T1_*}
     echo $stri
 #
     mkdir "$work_dir/sub$a"
-    cp $work_dir/Masks_ARN/${stri}* "$work_dir/sub${a}/mask.nii.gz"
-    cp $work_dir/RARE/${stri}* "$work_dir/sub${a}/mri.nii.gz"
+    cp $work_dir/Masks_ARN/${stri}* $work_dir/sub${a}/mask.nii.gz
+    cp $work_dir/RARE/${stri}* $work_dir/sub${a}/mri.nii.gz
+    echo $a
     let "a += 1"
+    echo "-----------------------------------------------------------"
 done
 
 
