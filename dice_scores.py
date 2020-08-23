@@ -12,6 +12,12 @@ def dice_coeff(img1, img2):
 
     return 2*s1/(s2 + s3)
 
+def jaccard_coeff(img1, img2):
+    overlap = img1 & img2
+    nov = img1 | img2
+    s1 = overlap.sum()
+    s = nov.sum()
+    return s1/s
 
 if __name__ == "__main__":
     work_path = sys.argv[1]
@@ -22,7 +28,7 @@ if __name__ == "__main__":
     im1 = im1_file.get_fdata() > 0
     im2 = im2_file.get_fdata() > 0
     dice = dice_coeff(im1,im2)
-
+    jac = jaccard_coeff(im1,im2)
     file_object = open(out_path + "/dice.csv" , 'a')
-    file_object.write(str(dice) + "\n")
+    file_object.write(str(dice) +"," + str(jac)+ "\n")
     file_object.close()
