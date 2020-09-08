@@ -12,8 +12,15 @@ if __name__ == "__main__":
     im_file = nib.load(sys.argv[1])
 
     res_path = sys.argv[2]
-    thresh = float(sys.argv[3])
-
+    have_t = False
+    thresh = 0
+    try:
+        if sys.argv[3] == "none":
+            have_t = True
+        else:
+            thresh = float(sys.argv[3])
+    except:
+        pass
     # Measure center of mass of image and create a small mask for which is CV initialisation
     img = im_file.get_fdata()
     cent = measurements.center_of_mass(img)
@@ -43,13 +50,22 @@ if __name__ == "__main__":
     nif = nib.Nifti1Image(imares, im_file.affine)
     imares = imares > 0
     imares2 = np.zeros(img.shape)
-    for i in range(imares.shape[0]):
-        for j in range(imares.shape[1]):
-            for k in range(imares.shape[2]):
-                if (imares[i, j, k] > 0) | (img[i, j, k] > thresh):
-                    imares2[i, j, k] = img[i, j, k]
-                else:
-                    imares2[i, j, k] = 0
+    if ~ have_t:
+        for i in range(imares.shape[0]):
+            for j in range(imares.shape[1]):
+                for k in range(imares.shape[2]):
+                    if (imares[i, j, k] > 0) | (img[i, j, k] > thresh):
+                        imares2[i, j, k] = img[i, j, k]
+                    else:
+                        imares2[i, j, k] = 0
+    else:
+        for i in range(imares.shape[0]):
+            for j in range(imares.shape[1]):
+                for k in range(imares.shape[2]):
+                    if (imares[i, j, k] > 0):
+                        imares2[i, j, k] = img[i, j, k]
+                    else:
+                        imares2[i, j, k] = 0
 
     imares = imares > 0
     imares = morph.binary_dilation(imares, iterations=5)
