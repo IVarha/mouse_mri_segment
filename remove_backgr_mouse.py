@@ -8,6 +8,37 @@ import skimage.segmentation as sg
 
 import segment_mouse
 
+
+def grow_middle(img):
+    # center of mass
+    center = measurements.center_of_mass(img)
+    center = [round(x) for x in center]
+    mask = np.zeros(img.shape)
+    xm = center[0]
+    dx = round(img.shape[0] / 20)
+    if dx < 1:
+        dx = 2
+    ym = center[1]
+    dy = round(img.shape[1] / 20)
+    if dy < 1:
+        dy = 2
+    zm = center[2]
+    dz = round(img.shape[2] / 20)
+    if dz < 1:
+        dz = 2
+    mask[:, :, :] = 0
+
+    mask[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz:zm + dz] = 1
+    # -----------------------------------------------------------------
+    mask = sg.morphological_chan_vese(img, iterations=25, init_level_set=mask > 0, lambda2=2)
+
+    images = segment_mouse.cv_model(img, init_mask=mask, num_divisions=5, num_iterations=40, start_end=[0.5, 4])
+
+    mask = segment_mouse.combine_image(images)
+    mask2 = mask>0.8
+    mask1 = mask > 0
+    return [mask1, mask2, center]
+
 if __name__ == "__main__":
     im_file = nib.load(sys.argv[1])
 
