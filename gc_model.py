@@ -23,6 +23,13 @@ def combine_image(images):
     res = res / len(images)
     return res
 
+
+def distance_metrics(img,mask):
+    res_dist = np.zeros(img.shape)
+
+    pass
+
+
 def gc_method(img, in_work_area,init_mask,k):
 
     # ===============PREPROC_ get
@@ -46,9 +53,9 @@ def gc_method(img, in_work_area,init_mask,k):
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
             for k in range(img.shape[2]):
-                if in_work_area[i,j,k] == False:
+                if not in_work_area[i, j, k]:
                     B[i,j,k] = 1
-                if init_mask[i,j,k] == True:
+                if init_mask[i, j, k]:
                     F[i,j,k] = 1
                 pass
 
