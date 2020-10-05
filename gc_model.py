@@ -24,18 +24,35 @@ def combine_image(images):
     return res
 
 
-def distance_metrics(img,mask):
-    res_dist = np.zeros(img.shape)
+def distance_metrics(mask):
+    res_dist = np.zeros(mask.shape)
+    # (l,w,h) = header.get_zooms()
 
-    pass
+
+    tmp_0 = mask.copy()
+    tmp_1 = mask.copy()
+    cnt = 1
+    while True:
+        tmp_1 = morph.binary_erosion(tmp_0)
+        tmp_0 = np.logical_xor(tmp_1,tmp_0)
+        if not tmp_0.max():
+            break
+        for i in range(mask.shape[0]):
+            for j in range(mask.shape[1]):
+                for k in range(mask.shape[2]):
+                    if tmp_0[i,j,k]:
+                        res_dist[i,j,k] = cnt
+        cnt = cnt + 1
+        tmp_0 = tmp_1.copy()
+    return res_dist
 
 
-def gc_method(img, in_work_area,init_mask,k):
+
+def gc_method(img, narrow_mask, init_mask, k):
 
     # ===============PREPROC_ get
-    mask_bord = init_mask.copy()
-    mask_bord = morph.binary_dilation(mask_bord,1)
-    mask_bord = (((not init_mask) | (not mask_bord)) &(init_mask | mask_bord))
+    dist_marker = distance_metrics(narrow_mask)
+
 
     graph = maxflow.Graph[float](img.shape[1]^3, img.shape[1]^3)
 
@@ -53,7 +70,7 @@ def gc_method(img, in_work_area,init_mask,k):
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
             for k in range(img.shape[2]):
-                if not in_work_area[i, j, k]:
+                if not narrow_mask[i, j, k]:
                     B[i,j,k] = 1
                 if init_mask[i, j, k]:
                     F[i,j,k] = 1
@@ -71,9 +88,9 @@ if __name__ == "__main__":
 
     init_res = grow_middle(img)
 
-    init_mask = init_res[0]
-    init_fore = init_res[1]
-    gc_method(img,init_fore,init_mask,2.3)
+    init_mask = init_res[0] #0
+    init_fore = init_res[1] #0.8
+    gc_method(img,init_fore,init_mask, 2.3)
 
 
 
