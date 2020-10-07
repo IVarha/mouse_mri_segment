@@ -6,7 +6,7 @@ import scipy.ndimage.morphology as morph
 import skimage.segmentation as sg
 import maxflow
 from remove_backgr_mouse import grow_middle
-
+import math
 
 def histogram_remove(img):
     i2 = np.zeros(img.shape)
@@ -51,15 +51,15 @@ def distance_metrics(mask):
 def gc_method(img,
               narrow_mask,
               init_mask,
-              k):
+              k_v):
 
     # ===============PREPROC_ get
     # get overlap window to not process the all dataset (maybe)
     print(1)
-    x0, x1, y0, y1, z1, z2 = (np.argmax(init_mask, 0)).min(), (np.argmax(init_mask, 0)).max(), \
+    x0, x1, y0, y1, z0, z1 = (np.argmax(init_mask, 0)).min(), (np.argmax(init_mask, 0)).max(), \
                              (np.argmax(init_mask, 1)).min(), (np.argmax(init_mask, 1)).max(), \
-                             (np.argmax(init_mask, 2)).min(), (np.argmax(init_mask, 2)).max(), \
-
+                             (np.argmax(init_mask, 2)).min(), (np.argmax(init_mask, 2)).max(),
+    l,w,h = x1-x0,y1-y0,z1-z0
     #GET DISTANCE METRICS
 
     dist_marker = distance_metrics(narrow_mask)
@@ -67,7 +67,7 @@ def gc_method(img,
     # Calculate FOREGROUND AND BACKGROUND SEED
 
     Fw, Bw = np.zeros(shape=img.shape), np.zeros(shape=img.shape)
-    graph = maxflow.Graph[float](img.shape[1]^3, img.shape[1]^3)
+
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
             for k in range(img.shape[2]):
@@ -78,16 +78,63 @@ def gc_method(img,
                 pass
 
     # calculate mean in narrow mask (in paper it's WM)
-    WM_mean = (np.ma.masked_array(img,mask=not narrow_mask)).mean()
+    WM_mean = (np.ma.masked_array(img,mask=~narrow_mask)).mean()
     # Calculate outside mean value (paper threshold)
     thr = (np.ma.masked_array(img, mask=init_mask)).mean()
+    k_val = k_v/(WM_mean - thr)
+    # --------------------- Calculate weights ----------------------
+    # 3x3 neibroughoud
 
-    # --------------------- Calculate edges ----------------------
+    #
 
+
+    weights = np.zeros((l,w,h,
+                        3,#we assing weight to point from left to right from
+                        # bottom to top  (x,y,z,(x+1), ) weight between point and point
+                        ))
+
+
+    for i in range(l):
+        for j in range(w):
+            for k in range(h):
+                    #             x + 1
+                # euclid
+                weights[i,j,k,0] = (max([dist_marker[i+x0,j+y0,k+z0],dist_marker[i+x0 + 1,j+y0,k+z0]]))**2
+                if (weights[i,j,k,0] != 1) | (narrow_mask[i+x0,j+y0,k+z0]==False):# maybe need to add smth else
+
+                    # set weight for 0weight
+                    if weights[i,j,k,0] == 0:
+
+                        weights[i,j,k,0] = 0.5
+                    t_val = min([img[i+x0,j+y0,k+z0],img[i+x0 + 1,j+y0,k+z0]])
+                    weights[i,j,k,0] =weights[i,j,k,0] *abs(math.exp(k_val*(t_val - thr) ) - 1)
+    #             y + 1
+                weights[i, j, k,1] = (max([dist_marker[i+x0,j+y0,k+z0], dist_marker[i+x0,j+y0 + 1,k+z0]])) ** 2
+                if (weights[i, j, k, 1] != 1) | (narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
+
+                    # set weight for 0weight
+                    if weights[i, j, k, 1] == 0:
+                        weights[i, j, k, 1] = 0.5
+                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0 + 1, j + y0, k + z0]])
+                    weights[i, j, k, 1] = weights[i, j, k, 1] * abs(math.exp(k_val * (t_val - thr)) - 1)
+    #             z + 1
+                weights[i, j, k,2] = (max([dist_marker[i+x0,j+y0,k+z0], dist_marker[i+x0,j+y0,k+z0+1]])) ** 2
+                if (weights[i,j,k,2] != 1) | (narrow_mask[i+x0,j+y0,k+z0]==False):# maybe need to add smth else
+
+                    # set weight for 0weight
+                    if weights[i,j,k,2] == 0:
+
+                        weights[i,j,k,2] = 0.5
+                    t_val = min([img[i+x0,j+y0,k+z0],img[i+x0 + 1,j+y0,k+z0]])
+                    weights[i,j,k,2] =weights[i,j,k,0] *abs(math.exp(k_val*(t_val - thr) ) - 1)
+
+    # BUILD EDGES TO PIPELINE
+    graph = maxflow.Graph[float](img.shape[1]**3, img.shape[1]**3)
 
 
     length,width,height = img.shape[0],img.shape[1],img.shape[2]
     grid = graph.add_grid_nodes(img.shape)
+    graph.add_grid_tedges()
     nodes = graph.add_nodes(length*width*height)
 
 
