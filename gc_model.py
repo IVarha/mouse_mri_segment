@@ -45,37 +45,37 @@ def distance_metrics(mask):
         tmp_0 = tmp_1.copy()
     return res_dist
 
+
 def block_dist(img):
     res_dist = np.zeros(img.shape)
-    (l,w,h) = img.shape
-    res_dist[img>0] = -1
+    (l, w, h) = img.shape
+    res_dist[img > 0] = -1
     # mark borders
-    res_dist[0,:,:] = 0
+    res_dist[0, :, :] = 0
     res_dist[:, 0, :] = 0
     res_dist[:, :, 0] = 0
-    res_dist[l-1,:,:] = 0
-    res_dist[:, w-1, :] = 0
-    res_dist[:, :, h-1] = 0
+    res_dist[l - 1, :, :] = 0
+    res_dist[:, w - 1, :] = 0
+    res_dist[:, :, h - 1] = 0
 
     # (l,w,h) = header.get_zooms()
 
     for x in range(19):
-        for i in range(1,l-1):
-            for j in range(1,w-1):
-                for k in range(1,h-1):
+        for i in range(1, l - 1):
+            for j in range(1, w - 1):
+                for k in range(1, h - 1):
                     # upgrade 8neib
-                    if res_dist[i,j,k]== -1:
-                        if ( (res_dist[i,j,k-1]== x) | (res_dist[i,j,k+1]== x)
-                        (res_dist[i,j-1,k]== x) | (res_dist[i,j+1,k]== x)
-                        (res_dist[i-1,j,k]== x) | (res_dist[i+1,j,k]== x) ):
-                            res_dist[i,j,k] = x + 1
+                    if res_dist[i, j, k] == -1:
+                        if ((res_dist[i, j, k - 1] == x) | (res_dist[i, j, k + 1] == x) |
+                                (res_dist[i, j - 1, k] == x) | (res_dist[i, j + 1, k] == x) |
+                                (res_dist[i - 1, j, k] == x) | (res_dist[i + 1, j, k] == x)):
+                            res_dist[i, j, k] = x + 1
     for i in range(l):
         for j in range(w):
             for k in range(h):
-                if res_dist[i,j,k]==-1:
-                    res_dist[i,j,k]=20
+                if res_dist[i, j, k] == -1:
+                    res_dist[i, j, k] = 20
     return res_dist
-
 
 
 def gc_method(img,
@@ -85,7 +85,14 @@ def gc_method(img,
     # ===============PREPROC_ get
     # get overlap window to not process the all dataset (maybe)
     print(1)
-    img = (img - img.min()) / (img.max() - img.min())
+    # img = (img - img.min()) / (img.max() - img.min()) # scale to [0,1]
+    # di = 1/256
+    # for i in range(256):
+    #     if i < 255:
+    #         img[(img>= di*i) & (img <di*(i+1))] = i
+    #     else:
+    #         img[(img >= di * i) & (img <= di * (i + 1))] = i
+
     x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
                              np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
                              np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
@@ -102,9 +109,11 @@ def gc_method(img,
         for j in range(img.shape[1]):
             for k in range(img.shape[2]):
                 if not init_mask[i, j, k]:
-                    Bw[i, j, k] = 1000000
+                    Bw[i, j, k] = 4000
                 if narrow_mask[i, j, k]:
-                    Fw[i, j, k] = 1000000
+                    Fw[i, j, k] = 4000
+                elif img[i, j, k] <= 0:
+                    Bw[i, j, k] = 4000
                 pass
 
     # calculate mean in narrow mask (in paper it's WM)
@@ -126,41 +135,61 @@ def gc_method(img,
             for k in range(h):
                 #             x + 1
                 # euclid
-                weights[i, j, k, 0] = (max([dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0 + 1, j + y0, k + z0]])) ** 2
-                if (weights[i,j,k,0] > 1) & (weights[i,j,k,0] < 6):
-                    weights[i,j,k,0] = 6
+                weights[i, j, k, 0] = (max(
+                    [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0 + 1, j + y0, k + z0]])) ** 2
+                if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
+                    weights[i, j, k, 0] = 6
                 if (weights[i, j, k, 0] != 1) & (weights[i, j, k, 0] != 6) & (weights[i, j, k, 0] != 0):
-                        # narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
+                    # narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
 
                     # set weight for 0weight
                     # if weights[i, j, k, 0] == 0:
                     #     weights[i, j, k, 0] = 0.5
                     t_val = min([img[i + x0, j + y0, k + z0], img[i + x0 + 1, j + y0, k + z0]])
                     weights[i, j, k, 0] = weights[i, j, k, 0] * abs(math.exp(k_val * (t_val - thr)) - 1)
+                if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
+                    weights[i, j, k, 0] = 6
+                if (weights[i, j, k, 0] > 0) & (weights[i, j, k, 0] < 1):
+                    weights[i, j, k, 0] = 1
+                if weights[i, j, k, 0] == 0:
+                    weights[i, j, k, 0] = 1000
                 ###########################################################################
-                #------------------ y + 1 -------------------------------------------------
+                # ------------------ y + 1 -------------------------------------------------
                 weights[i, j, k, 1] = (max(
                     [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0 + 1, k + z0]])) ** 2
-                if (weights[i, j, k, 1] < 1) | (
-                        narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
-
+                if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
+                    weights[i, j, k, 1] = 6
+                if (weights[i, j, k, 1] != 1) & (weights[i, j, k, 1] != 6) & (weights[i, j, k, 1] != 0):
                     # set weight for 0weight
-                    if weights[i, j, k, 1] == 0:
-                        weights[i, j, k, 1] = 0.5
+                    # if weights[i, j, k, 1] == 0:
+                    #     weights[i, j, k, 1] = 0.5
                     t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0 + 1, k + z0]])
                     weights[i, j, k, 1] = weights[i, j, k, 1] * abs(math.exp(k_val * (t_val - thr)) - 1)
+                if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
+                    weights[i, j, k, 1] = 6
+                if (weights[i, j, k, 1] > 0) & (weights[i, j, k, 1] < 1):
+                    weights[i, j, k, 1] = 1
+                if weights[i, j, k, 1] == 0:
+                    weights[i, j, k, 1] = 1000
+                # ##########################################################
                 #             z + 1
                 weights[i, j, k, 2] = (max(
                     [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0, k + z0 + 1]])) ** 2
-                if (weights[i, j, k, 2] < 1) | (
-                        narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
+                if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
+                    weights[i, j, k, 2] = 6
+                if (weights[i, j, k, 2] != 1) & (weights[i, j, k, 2] != 6) & (weights[i, j, k, 2] != 0):
 
                     # set weight for 0weight
                     if weights[i, j, k, 2] == 0:
                         weights[i, j, k, 2] = 0.5
-                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0 + 1, j + y0, k + z0]])
+                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0, k + z0 + 1]])
                     weights[i, j, k, 2] = weights[i, j, k, 2] * abs(math.exp(k_val * (t_val - thr)) - 1)
-
+                if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
+                    weights[i, j, k, 2] = 6
+                if (weights[i, j, k, 2] > 0) & (weights[i, j, k, 2] < 1):
+                    weights[i, j, k, 2] = 1
+                if weights[i, j, k, 2] == 0:
+                    weights[i, j, k, 2] = 1000
     # BUILD EDGES TO PIPELINE
     graph = maxflow.Graph[float](img.shape[1] ** 3, img.shape[1] ** 3)
 
@@ -208,6 +237,17 @@ if __name__ == "__main__":
     # im_seg = nib.load(sys.argv[2])
     res_path = sys.argv[2]
     img = im_file.get_fdata()
+    img = (img - img.min()) / (img.max() - img.min()) # scale to [0,1]
+    di = 1/256
+    for i in range(256):
+        if i < 255:
+            img[(img>= di*i) & (img <di*(i+1))] = i
+        else:
+            img[(img >= di * i) & (img <= di * (i + 1))] = i
+
+    nif = nib.Nifti1Image(img.astype(np.int), im_file.affine)
+    nib.save(nif, res_path + '/' + "rescaled256.nii.gz")
+
     out = sys.argv[3]
     init_res = grow_middle(img)
 
@@ -218,7 +258,6 @@ if __name__ == "__main__":
     nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + "init_fore.nii.gz")
     imares = gc_method(img, init_fore, init_mask, 2.3)
-
 
     nif = nib.Nifti1Image(imares, im_file.affine)
     nib.save(nif, res_path + '/' + out)
