@@ -46,6 +46,253 @@ def distance_metrics(mask):
     return res_dist
 
 
+def var8(Mat, x, y, z, size):
+    indices = np.zeros(8)
+    indices[0] = Mat[x, y, z]
+    indices[1] = Mat[x, y, z + size]
+    indices[2] = Mat[x, y + size, z]
+    indices[3] = Mat[x, y + size, z + size]
+    indices[4] = Mat[x + size, y, z]
+    indices[5] = Mat[x + size, y, z + size]
+    indices[6] = Mat[x + size, y + size, z]
+    indices[7] = Mat[x + size, y + size, z + size]
+    return indices.var()
+
+
+def seed_select(img, mean_thre, var_thre):
+    variance8V = 0
+    weightedVariance = 100000
+
+    tempX = 0
+    tempY = 0
+    tempZ = 0
+    tempMean = 0
+    tempVariance = 0
+    size = 5
+    qualifiedFlag = True
+
+    shortlist_mean = np.zeros(10)
+    shortListVariance = np.full(10, 100000)
+    shortListSeedX = np.full(10, -1)
+    shortListSeedY = np.full(10, -1)
+    shortListSeedZ = np.full(10, -1)
+    neibourghood6 = [[size, 0, 0], [-size, 0, 0], [0, size, 0], [0, -size, 0], [0, 0, size], [0, 0, -size]]
+
+    for i in range(size, img.shape[0] - size, size):
+        for j in range(size, img.shape[1] - size, size):
+            for k in range(size, img.shape[2] - size, size):
+                cube = img[i:i + size, j:j + size, k:k + size]
+                mean5x5 = cube.mean()
+                variance5x5 = cube.var()
+                v8 = var8(cube, 0, 0, 0, size - 1)
+
+                if (mean5x5 > mean_thre) & (variance5x5 < var_thre):
+                    for l in range(6):
+                        tempX = i + neibourghood6[l][0]
+                        tempY = j + neibourghood6[l][1]
+                        tempZ = k + neibourghood6[l][2]
+                        if ((tempX >= img.shape[0] - size)
+                                | (tempY >= img.shape[1] - size)
+                                | (tempZ >= img.shape[2] - size)):
+                            qualifiedFlag = False
+                            break
+                        t_cube = img[tempX:tempX + size, tempY: tempY + size, tempZ:tempZ + size]
+                        tempMean = t_cube.mean()
+                        tempVariance = t_cube.var()
+                        if (~((tempMean > mean_thre) &
+                              (tempVariance < var_thre))):
+                            qualifiedFlag = False
+                            break
+                        else:
+                            qualifiedFlag = True
+
+                    if qualifiedFlag:
+                        weightedVariance = 0.5 * variance5x5 + 0.5 * variance8V
+
+                        for m in range(10):
+                            if shortListVariance[m] >= weightedVariance:
+                                n = 9
+                                while n > m:
+                                    shortlist_mean[n] = shortlist_mean[n - 1]
+                                    shortListVariance[n] = shortListVariance[n - 1]
+                                    shortListSeedX[n] = shortListSeedX[n - 1]
+                                    shortListSeedY[n] = shortListSeedY[n - 1]
+                                    shortListSeedZ[n] = shortListSeedZ[n - 1]
+                                    n = n - 1
+                                shortlist_mean[m] = mean5x5
+                                shortListVariance[m] = weightedVariance
+                                shortListSeedX[m] = i
+                                shortListSeedY[m] = j
+                                shortListSeedZ[m] = k
+                                break
+
+    lowestMean = 10000000
+    target = 0
+    for k in range(10):
+        if (shortlist_mean[k] < lowestMean):
+            lowestMean = shortlist_mean[k]
+            target = k
+
+    seedX = shortListSeedX[target]
+    seedY = shortListSeedY[target]
+    seedZ = shortListSeedZ[target]
+    return [seedX, seedY, seedZ]
+
+
+def Sub2Ind3D(sX, sY, sZ, iSizeX, iSizeY):
+    ind = sX + (sY * iSizeX) + (sZ * iSizeX * iSizeY)
+    return ind
+
+
+def region_growing(img, seed, lmdT, umdT, nmdT, vT):
+    ptrLMeanDiffThreshold = lmdT
+    ptrUMeanDiffThreshold = umdT
+    ptrNMeanDiffThreshold = nmdT
+    ptrVarianceThreshold = vT
+
+    (iSizeX, iSizeY, iSizeZ) = img.shape
+
+    iSeedPosX = seed[0]
+    iSeedPosY = seed[1]
+    iSeedPosZ = seed[2]
+
+    ptrVisited = np.zeros(img.shape)
+    MLabel = np.zeros(img.shape)
+    cube = img[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3]
+    meanSeed = cube.mean()
+    varianceSeed = cube.var()
+    variance8VSeed = var8(cube, 0, 0, 0, 3-1)
+
+    indexSeed = Sub2Ind3D(iSeedPosX, iSeedPosY, iSeedPosZ, iSizeX, iSizeY)
+    seedNode = [iSeedPosZ, iSeedPosY, iSeedPosZ, indexSeed, meanSeed, varianceSeed, variance8VSeed]
+
+    ptrQueue = []
+    ptrQueue.append(seedNode)
+
+    MLabel[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3] = 1
+    ptrVisited[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3] = 1
+
+
+    minMean = meanSeed - ptrLMeanDiffThreshold
+    maxMean = meanSeed + ptrUMeanDiffThreshold
+
+    ptrCurrentNode = ptrQueue.pop()
+
+    meanCurrentNode = 0
+    varianceCurrentNode = 0
+    variance8VCurrentNode = 0
+    subXCurrentNode = 0
+    subYCurrentNode = 0
+    subZCurrentNode = 0
+    indexCurrentNode = 0
+
+    meanNeighborNode = 0
+    varianceNeighborNode = 0
+    variance8VNeighborNode = 0
+    subXNeighborNode = 0
+    subYNeighborNode = 0
+    subZNeighborNode = 0
+    indexNeighborNode = 0
+
+    sixNeighbourOffset = [[-1, 0, 0], [1, 0, 0], [0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1]]
+
+    while ptrCurrentNode != None:
+        meanCurrentNode = ptrCurrentNode[4]
+        subXCurrentNode = ptrCurrentNode[0]
+        subYCurrentNode = ptrCurrentNode[1]
+        subZCurrentNode = ptrCurrentNode[2]
+
+        for n1 in range(6):
+            subXNeighborNode = subXCurrentNode + sixNeighbourOffset[n1][0]
+            subYNeighborNode = subYCurrentNode + sixNeighbourOffset[n1][1]
+            subZNeighborNode = subZCurrentNode + sixNeighbourOffset[n1][2]
+
+            if ( (subXNeighborNode <= 3) |
+                    (subXNeighborNode >= iSizeX - 3) |
+                    (subYNeighborNode <= 3) |
+                    (subYNeighborNode >= iSizeY - 3) |
+                    (subZNeighborNode <= 3) |
+                    (subZNeighborNode >= iSizeZ - 3)) :# skip the pixel out of the image
+                continue
+            indexNeighborNode = Sub2Ind3D(subXNeighborNode,
+                                          subYNeighborNode,
+                                          subZNeighborNode,
+                                          iSizeX, iSizeY)
+            if ptrVisited[subZNeighborNode][subYNeighborNode][subXNeighborNode] != 1:
+                cube_t = img[subXNeighborNode:subXNeighborNode+3,subYNeighborNode:subYNeighborNode+3,subZNeighborNode:subZNeighborNode+3]
+                meanNeighborNode = cube_t.mean()
+                varianceNeighborNode = cube_t.var()
+
+                variance8VNeighborNode = var8(cube_t,0,0,0,2)
+
+                ptrVisited[subXNeighborNode:subXNeighborNode+3,
+                    subYNeighborNode:subYNeighborNode+3,
+                    subZNeighborNode:subZNeighborNode+3]=1
+
+                if ( (math.fabs(meanCurrentNode - meanNeighborNode) < ptrNMeanDiffThreshold)
+                        & (varianceNeighborNode < ptrVarianceThreshold)
+                        & (meanNeighborNode > minMean)
+                        & (meanNeighborNode < maxMean) ):
+                    meanNeighborNode = (meanNeighborNode + meanCurrentNode) / 2
+                    ptrCurrentNode = [subXNeighborNode,
+                                         subYNeighborNode,
+                                         subZNeighborNode,
+                                         indexNeighborNode,
+                                         meanNeighborNode,
+                                         varianceNeighborNode,
+                                         variance8VNeighborNode]
+                    ptrQueue.append(ptrCurrentNode)
+
+                    MLabel[subXNeighborNode:subXNeighborNode+3,
+                        subYNeighborNode:subYNeighborNode+3,
+                        subZNeighborNode:subZNeighborNode+3]=1
+        if len(ptrQueue)>0:
+            ptrCurrentNode = ptrQueue.pop()
+        else:
+            ptrCurrentNode = None
+
+    return MLabel
+
+def preprocessing(img):
+    result = np.zeros(img.shape)
+    # copy from realisation
+    mean_thre = 0.45 * 160
+    varianceThreshold = 0.004 * 160 * 160
+
+    seed = seed_select(img, mean_thre, varianceThreshold)
+
+    repetition = 1
+    while ((seed[0] == -1) | (seed[1] == -1) | (seed[2] == -1)):
+        mean_thre = mean_thre - 0.05 * 160
+        seed = seed_select(img, mean_thre, varianceThreshold)
+        repetition = repetition + 1
+        if (repetition >= 8):
+            break
+
+    if seed[0] == -1 | seed[1] == -1 | seed[2] == -1:
+        # failed
+        return -1
+
+    seed[0] = seed[0] + 2
+    seed[1] = seed[1] + 2
+    seed[2] = seed[2] + 2
+
+    meanDiffThreshold = 0.03 * 160
+
+    varianceDiffThreshold = 0.004 * 160 * 160
+
+    lmdT = 0.05 * 160
+
+    umdT = 0.25 * 160
+
+    label = region_growing(img, seed ,lmdT,umdT,meanDiffThreshold,varianceDiffThreshold)
+
+    cube = img[label == 1]
+    print("white mean : " + str(cube.mean()) + " seed num" + str(len(cube)))
+
+    return cube.mean()
+
+
 def block_dist(img):
     res_dist = np.zeros(img.shape)
     (l, w, h) = img.shape
@@ -77,10 +324,102 @@ def block_dist(img):
                     res_dist[i, j, k] = 20
     return res_dist
 
+def decide_bound(img, threshold):
+
+    factor = 1.2
+    tf = factor * threshold
+    x_start,y_start,z_start = 0,0,0
+    x_end = img.shape[0] - 1
+    y_end = img.shape[1] - 1
+    z_end = img.shape[2] - 1
+    #xstart
+    bExit = 0
+    x,y,z = 0,0,0
+    while ((x < img.shape[0]) & (bExit == 0)):
+        while((y < img.shape[1]) & (bExit == 0)):
+            while ((z < img.shape[2]) & (bExit == 0)):
+                if img[x,y,z] > tf:
+                    x_start = x
+                    bExit = 1
+                z = z + 1
+            y = y + 1
+        x = x + 1
+
+    #xend
+    bExit = 0
+    x,y,z = img.shape[0]-1,0,0
+    while ((x > x_start) & (bExit == 0)):
+        while((y < img.shape[1]) & (bExit == 0)):
+            while ((z < img.shape[2]) & (bExit == 0)):
+                if img[x,y,z] > tf:
+                    x_end = x
+                    bExit = 1
+                z = z + 1
+            y = y + 1
+        x = x - 1
+
+
+    #y_start
+    bExit = 0
+    x,y,z = 0,0,0
+    while ((y < img.shape[1]) & (bExit == 0)):
+        while((x < img.shape[0]) & (bExit == 0)):
+            while ((z < img.shape[2]) & (bExit == 0)):
+                if img[x,y,z] > tf:
+                    y_start = y
+                    bExit = 1
+                z = z + 1
+            x = x + 1
+        y = y + 1
+
+    #yend
+    bExit = 0
+    x,y,z = 0,img.shape[1]-1,0
+    while ((y > y_start) & (bExit == 0)):
+        while((x < img.shape[1]) & (bExit == 0)):
+            while ((z < img.shape[2]) & (bExit == 0)):
+
+                if img[x,y,z] > tf:
+                    y_end = y
+                    bExit = 1
+                z = z + 1
+            x = x + 1
+        y = y - 1
+
+    #z_start
+    bExit = 0
+    x,y,z = 0,0,0
+    while ((z < img.shape[2]) & (bExit == 0)):
+        while((x < img.shape[0]) & (bExit == 0)):
+            while ((y < img.shape[1]) & (bExit == 0)):
+                if img[x,y,z] > tf:
+                    z_start = z
+                    bExit = 1
+                y = y + 1
+            x = x + 1
+        z = z + 1
+
+    #zend
+    bExit = 0
+    x,y,z = 0,0,img.shape[2] - 1
+    while ((z > z_start) & (bExit == 0)):
+        while((x < img.shape[0]) & (bExit == 0)):
+            while ((y < img.shape[1]) & (bExit == 0)):
+                if img[x,y,z] > tf:
+                    z_end = z
+                    bExit = 1
+                y = y + 1
+            x = x + 1
+        z = z - 1
+
+    return [x_start, x_end, y_start, y_end, z_start, z_end]
+
 
 def gc_method(img,
               narrow_mask,
               init_mask,
+              threshold,
+              wm,
               k_v):
     # ===============PREPROC_ get
     # get overlap window to not process the all dataset (maybe)
@@ -92,10 +431,10 @@ def gc_method(img,
     #         img[(img>= di*i) & (img <di*(i+1))] = i
     #     else:
     #         img[(img >= di * i) & (img <= di * (i + 1))] = i
-
-    x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
-                             np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
-                             np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
+    [x0, x1, y0, y1, z0, z1] = decide_bound(img,threshold)
+    # x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
+    #                          np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
+    #                          np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
     l, w, h = x1 - x0, y1 - y0, z1 - z0
     # GET DISTANCE METRICS
 
@@ -117,9 +456,11 @@ def gc_method(img,
                 pass
 
     # calculate mean in narrow mask (in paper it's WM)
-    WM_mean = (np.ma.masked_array(img, mask=~narrow_mask)).mean()
+    WM_mean = wm
+    # WM_mean = (np.ma.masked_array(img, mask=~narrow_mask)).mean()
     # Calculate outside mean value (paper threshold)
-    thr = (np.ma.masked_array(img, mask=init_mask)).mean()
+    # thr = (np.ma.masked_array(img, mask=init_mask)).mean()
+    thr = threshold
     k_val = k_v / (WM_mean - thr)
     # --------------------- Calculate weights ----------------------
     # 3x3 neibroughoud
@@ -215,6 +556,10 @@ def gc_method(img,
                     graph.add_edge(ind, forward, weights[i, j, k, 2], weights[i, j, k, 2])
 
     graph.maxflow()
+    #
+
+
+
     sgm = graph.get_grid_segments(grid_ids)
     res = np.zeros(img.shape)
     for i in range(l):
@@ -237,13 +582,25 @@ if __name__ == "__main__":
     # im_seg = nib.load(sys.argv[2])
     res_path = sys.argv[2]
     img = im_file.get_fdata()
-    img = (img - img.min()) / (img.max() - img.min()) # scale to [0,1]
-    di = 1/256
+    img = (img - img.min()) / (img.max() - img.min())  # scale to [0,1]
+    di = 1 / 256
     for i in range(256):
         if i < 255:
-            img[(img>= di*i) & (img <di*(i+1))] = i
+            img[(img >= di * i) & (img < di * (i + 1))] = i
         else:
             img[(img >= di * i) & (img <= di * (i + 1))] = i
+
+    whitemean = preprocessing(img)
+    _t = 0.4
+    threshold = whitemean * _t
+    print("threshold set to: %f*%f=%f\n", whitemean, _t, threshold)
+
+    for i in range(img.shape[0]):
+        for j in range(img.shape[1]):
+            for k in range(img.shape[2]):
+                if img[i,j,k] < threshold + 1:
+                    img[i,j,k] = 0
+
 
     nif = nib.Nifti1Image(img.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + "rescaled256.nii.gz")
@@ -257,7 +614,7 @@ if __name__ == "__main__":
     nib.save(nif, res_path + '/' + "initmask.nii.gz")
     nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + "init_fore.nii.gz")
-    imares = gc_method(img, init_fore, init_mask, 2.3)
+    imares = gc_method(img, init_fore, init_mask, threshold, whitemean, 2.3)
 
     nif = nib.Nifti1Image(imares, im_file.affine)
     nib.save(nif, res_path + '/' + out)
