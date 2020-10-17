@@ -1,12 +1,12 @@
+import math
 import sys
 
+import maxflow
 import nibabel as nib
 import numpy as np
 import scipy.ndimage.morphology as morph
-import skimage.segmentation as sg
-import maxflow
+
 from remove_backgr_mouse import grow_middle
-import math
 
 
 def histogram_remove(img):
@@ -161,7 +161,7 @@ def region_growing(img, seed, lmdT, umdT, nmdT, vT):
     cube = img[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3]
     meanSeed = cube.mean()
     varianceSeed = cube.var()
-    variance8VSeed = var8(cube, 0, 0, 0, 3-1)
+    variance8VSeed = var8(cube, 0, 0, 0, 3 - 1)
 
     indexSeed = Sub2Ind3D(iSeedPosX, iSeedPosY, iSeedPosZ, iSizeX, iSizeY)
     seedNode = [iSeedPosZ, iSeedPosY, iSeedPosZ, indexSeed, meanSeed, varianceSeed, variance8VSeed]
@@ -171,7 +171,6 @@ def region_growing(img, seed, lmdT, umdT, nmdT, vT):
 
     MLabel[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3] = 1
     ptrVisited[iSeedPosX:iSeedPosX + 3, iSeedPosY:iSeedPosY + 3, iSeedPosZ:iSeedPosZ + 3] = 1
-
 
     minMean = meanSeed - ptrLMeanDiffThreshold
     maxMean = meanSeed + ptrUMeanDiffThreshold
@@ -207,51 +206,53 @@ def region_growing(img, seed, lmdT, umdT, nmdT, vT):
             subYNeighborNode = subYCurrentNode + sixNeighbourOffset[n1][1]
             subZNeighborNode = subZCurrentNode + sixNeighbourOffset[n1][2]
 
-            if ( (subXNeighborNode <= 3) |
+            if ((subXNeighborNode <= 3) |
                     (subXNeighborNode >= iSizeX - 3) |
                     (subYNeighborNode <= 3) |
                     (subYNeighborNode >= iSizeY - 3) |
                     (subZNeighborNode <= 3) |
-                    (subZNeighborNode >= iSizeZ - 3)) :# skip the pixel out of the image
+                    (subZNeighborNode >= iSizeZ - 3)):  # skip the pixel out of the image
                 continue
             indexNeighborNode = Sub2Ind3D(subXNeighborNode,
                                           subYNeighborNode,
                                           subZNeighborNode,
                                           iSizeX, iSizeY)
-            if ptrVisited[subZNeighborNode][subYNeighborNode][subXNeighborNode] != 1:
-                cube_t = img[subXNeighborNode:subXNeighborNode+3,subYNeighborNode:subYNeighborNode+3,subZNeighborNode:subZNeighborNode+3]
+            if ptrVisited[subXNeighborNode][subYNeighborNode][subZNeighborNode] != 1:
+                cube_t = img[subXNeighborNode:subXNeighborNode + 3, subYNeighborNode:subYNeighborNode + 3,
+                         subZNeighborNode:subZNeighborNode + 3]
                 meanNeighborNode = cube_t.mean()
                 varianceNeighborNode = cube_t.var()
 
-                variance8VNeighborNode = var8(cube_t,0,0,0,2)
+                variance8VNeighborNode = var8(cube_t, 0, 0, 0, 2)
 
-                ptrVisited[subXNeighborNode:subXNeighborNode+3,
-                    subYNeighborNode:subYNeighborNode+3,
-                    subZNeighborNode:subZNeighborNode+3]=1
+                ptrVisited[subXNeighborNode:subXNeighborNode + 3,
+                subYNeighborNode:subYNeighborNode + 3,
+                subZNeighborNode:subZNeighborNode + 3] = 1
 
-                if ( (math.fabs(meanCurrentNode - meanNeighborNode) < ptrNMeanDiffThreshold)
+                if ((math.fabs(meanCurrentNode - meanNeighborNode) < ptrNMeanDiffThreshold)
                         & (varianceNeighborNode < ptrVarianceThreshold)
                         & (meanNeighborNode > minMean)
-                        & (meanNeighborNode < maxMean) ):
+                        & (meanNeighborNode < maxMean)):
                     meanNeighborNode = (meanNeighborNode + meanCurrentNode) / 2
                     ptrCurrentNode = [subXNeighborNode,
-                                         subYNeighborNode,
-                                         subZNeighborNode,
-                                         indexNeighborNode,
-                                         meanNeighborNode,
-                                         varianceNeighborNode,
-                                         variance8VNeighborNode]
+                                      subYNeighborNode,
+                                      subZNeighborNode,
+                                      indexNeighborNode,
+                                      meanNeighborNode,
+                                      varianceNeighborNode,
+                                      variance8VNeighborNode]
                     ptrQueue.append(ptrCurrentNode)
 
-                    MLabel[subXNeighborNode:subXNeighborNode+3,
-                        subYNeighborNode:subYNeighborNode+3,
-                        subZNeighborNode:subZNeighborNode+3]=1
-        if len(ptrQueue)>0:
+                    MLabel[subXNeighborNode:subXNeighborNode + 3,
+                    subYNeighborNode:subYNeighborNode + 3,
+                    subZNeighborNode:subZNeighborNode + 3] = 1
+        if len(ptrQueue) > 0:
             ptrCurrentNode = ptrQueue.pop()
         else:
             ptrCurrentNode = None
 
     return MLabel
+
 
 def preprocessing(img):
     result = np.zeros(img.shape)
@@ -285,7 +286,7 @@ def preprocessing(img):
 
     umdT = 0.25 * 160
 
-    label = region_growing(img, seed ,lmdT,umdT,meanDiffThreshold,varianceDiffThreshold)
+    label = region_growing(img, seed, lmdT, umdT, meanDiffThreshold, varianceDiffThreshold)
 
     cube = img[label == 1]
     print("white mean : " + str(cube.mean()) + " seed num" + str(len(cube)))
@@ -322,90 +323,91 @@ def block_dist(img):
             for k in range(h):
                 if res_dist[i, j, k] == -1:
                     res_dist[i, j, k] = 20
+                if res_dist[i, j, k] == 0:
+                    res_dist[i, j, k] = 1
     return res_dist
 
-def decide_bound(img, threshold):
 
+def decide_bound(img, threshold):
     factor = 1.2
     tf = factor * threshold
-    x_start,y_start,z_start = 0,0,0
+    x_start, y_start, z_start = 0, 0, 0
     x_end = img.shape[0] - 1
     y_end = img.shape[1] - 1
     z_end = img.shape[2] - 1
-    #xstart
+    # xstart
     bExit = 0
-    x,y,z = 0,0,0
+    x, y, z = 0, 0, 0
     while ((x < img.shape[0]) & (bExit == 0)):
-        while((y < img.shape[1]) & (bExit == 0)):
+        while ((y < img.shape[1]) & (bExit == 0)):
             while ((z < img.shape[2]) & (bExit == 0)):
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     x_start = x
                     bExit = 1
                 z = z + 1
             y = y + 1
         x = x + 1
 
-    #xend
+    # xend
     bExit = 0
-    x,y,z = img.shape[0]-1,0,0
+    x, y, z = img.shape[0] - 1, 0, 0
     while ((x > x_start) & (bExit == 0)):
-        while((y < img.shape[1]) & (bExit == 0)):
+        while ((y < img.shape[1]) & (bExit == 0)):
             while ((z < img.shape[2]) & (bExit == 0)):
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     x_end = x
                     bExit = 1
                 z = z + 1
             y = y + 1
         x = x - 1
 
-
-    #y_start
+    # y_start
     bExit = 0
-    x,y,z = 0,0,0
+    x, y, z = 0, 0, 0
     while ((y < img.shape[1]) & (bExit == 0)):
-        while((x < img.shape[0]) & (bExit == 0)):
+        while ((x < img.shape[0]) & (bExit == 0)):
             while ((z < img.shape[2]) & (bExit == 0)):
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     y_start = y
                     bExit = 1
                 z = z + 1
             x = x + 1
         y = y + 1
 
-    #yend
+    # yend
     bExit = 0
-    x,y,z = 0,img.shape[1]-1,0
+    x, y, z = 0, img.shape[1] - 1, 0
     while ((y > y_start) & (bExit == 0)):
-        while((x < img.shape[1]) & (bExit == 0)):
+        while ((x < img.shape[1]) & (bExit == 0)):
             while ((z < img.shape[2]) & (bExit == 0)):
 
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     y_end = y
                     bExit = 1
                 z = z + 1
             x = x + 1
         y = y - 1
 
-    #z_start
+    # z_start
     bExit = 0
-    x,y,z = 0,0,0
+    x, y, z = 0, 0, 0
     while ((z < img.shape[2]) & (bExit == 0)):
-        while((x < img.shape[0]) & (bExit == 0)):
+        while ((x < img.shape[0]) & (bExit == 0)):
             while ((y < img.shape[1]) & (bExit == 0)):
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     z_start = z
                     bExit = 1
                 y = y + 1
             x = x + 1
         z = z + 1
 
-    #zend
+    # zend
     bExit = 0
-    x,y,z = 0,0,img.shape[2] - 1
+    x, y, z = 0, 0, img.shape[2] - 1
     while ((z > z_start) & (bExit == 0)):
-        while((x < img.shape[0]) & (bExit == 0)):
+        while ((x < img.shape[0]) & (bExit == 0)):
             while ((y < img.shape[1]) & (bExit == 0)):
-                if img[x,y,z] > tf:
+                if img[x, y, z] > tf:
                     z_end = z
                     bExit = 1
                 y = y + 1
@@ -413,6 +415,13 @@ def decide_bound(img, threshold):
         z = z - 1
 
     return [x_start, x_end, y_start, y_end, z_start, z_end]
+
+
+def max_flow(weights, Fw, Bw):
+    for i in range(weights.shape[0]):
+        for j in range(weights.shape[1]):
+            for k in range(weights.shape[2]):
+                pass
 
 
 def gc_method(img,
@@ -431,11 +440,33 @@ def gc_method(img,
     #         img[(img>= di*i) & (img <di*(i+1))] = i
     #     else:
     #         img[(img >= di * i) & (img <= di * (i + 1))] = i
-    [x0, x1, y0, y1, z0, z1] = decide_bound(img,threshold)
+    # [x0, x1, y0, y1, z0, z1] = decide_bound(img,threshold)
+    # calculate mean in narrow mask (in paper it's WM)
+    # WM_mean = wm
+
+
+    # WM FILTER
+    WM_mean = (np.ma.masked_array(img, mask=~narrow_mask)).mean()
+    thr = 0.6 * WM_mean
+    img[img < (thr + 1)] = 0
+    # Calculate outside mean value (paper threshold)
+
+    thr = (np.ma.masked_array(img, mask=init_mask)).mean()
+
+    # thr = threshold
+    k_val = k_v / (WM_mean - thr)
+
+    # [x0, x1, y0, y1, z0, z1] = decide_bound(img, thr)
+
+    # get label > thr
+    label = img > (thr * 1.26)
+    x0, x1, y0, y1, z0, z1 = np.where(label == True)[0].min(), np.where(label == True)[0].max(), \
+                             np.where(label == True)[1].min(), np.where(label == True)[1].max(), \
+                             np.where(label == True)[2].min(), np.where(label == True)[2].max()
     # x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
     #                          np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
     #                          np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
-    l, w, h = x1 - x0, y1 - y0, z1 - z0
+    l, w, h = x1 - x0 + 1, y1 - y0 + 1, z1 - z0 + 1
     # GET DISTANCE METRICS
 
     # dist_marker = distance_metrics(narrow_mask)
@@ -447,21 +478,14 @@ def gc_method(img,
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
             for k in range(img.shape[2]):
-                if not init_mask[i, j, k]:
-                    Bw[i, j, k] = 4000
+                # if not init_mask[i, j, k]:
+                #     Bw[i, j, k] = 4000
                 if narrow_mask[i, j, k]:
-                    Fw[i, j, k] = 4000
+                    Fw[i, j, k] = 4000#infinity foreground
                 elif img[i, j, k] <= 0:
-                    Bw[i, j, k] = 4000
+                    Bw[i, j, k] = 4000#0 = background
                 pass
 
-    # calculate mean in narrow mask (in paper it's WM)
-    WM_mean = wm
-    # WM_mean = (np.ma.masked_array(img, mask=~narrow_mask)).mean()
-    # Calculate outside mean value (paper threshold)
-    # thr = (np.ma.masked_array(img, mask=init_mask)).mean()
-    thr = threshold
-    k_val = k_v / (WM_mean - thr)
     # --------------------- Calculate weights ----------------------
     # 3x3 neibroughoud
 
@@ -476,96 +500,113 @@ def gc_method(img,
             for k in range(h):
                 #             x + 1
                 # euclid
-                weights[i, j, k, 0] = (max(
-                    [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0 + 1, j + y0, k + z0]])) ** 2
-                if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
-                    weights[i, j, k, 0] = 6
-                if (weights[i, j, k, 0] != 1) & (weights[i, j, k, 0] != 6) & (weights[i, j, k, 0] != 0):
-                    # narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
+                if i + x0 + 1 < x1:
 
-                    # set weight for 0weight
-                    # if weights[i, j, k, 0] == 0:
-                    #     weights[i, j, k, 0] = 0.5
-                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0 + 1, j + y0, k + z0]])
-                    weights[i, j, k, 0] = weights[i, j, k, 0] * abs(math.exp(k_val * (t_val - thr)) - 1)
-                if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
-                    weights[i, j, k, 0] = 6
-                if (weights[i, j, k, 0] > 0) & (weights[i, j, k, 0] < 1):
-                    weights[i, j, k, 0] = 1
-                if weights[i, j, k, 0] == 0:
-                    weights[i, j, k, 0] = 1000
+                    weights[i, j, k, 0] = (max(
+                        [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0 + 1, j + y0, k + z0]])) ** 2
+                    if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
+                        weights[i, j, k, 0] = 6
+                    if (weights[i, j, k, 0] != 1) & (weights[i, j, k, 0] != 6) & (weights[i, j, k, 0] != 0):
+                        # narrow_mask[i + x0, j + y0, k + z0] == False):  # maybe need to add smth else
+
+                        # set weight for 0weight
+                        # if weights[i, j, k, 0] == 0:
+                        #     weights[i, j, k, 0] = 0.5
+                        t_val = min([img[i + x0, j + y0, k + z0], img[i + x0 + 1, j + y0, k + z0]])
+                        weights[i, j, k, 0] = weights[i, j, k, 0] * abs(math.exp(k_val * (t_val - thr)) - 1)
+                    if (weights[i, j, k, 0] > 1) & (weights[i, j, k, 0] < 6):
+                        weights[i, j, k, 0] = 6
+                    if (weights[i, j, k, 0] > 0) & (weights[i, j, k, 0] < 1):
+                        weights[i, j, k, 0] = 1
+
+                    if weights[i, j, k, 0] == 0:
+                        weights[i, j, k, 0] = 1000
+                else:#dummy
+                    weights[i, j, k, 0] = -1
+
                 ###########################################################################
                 # ------------------ y + 1 -------------------------------------------------
-                weights[i, j, k, 1] = (max(
-                    [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0 + 1, k + z0]])) ** 2
-                if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
-                    weights[i, j, k, 1] = 6
-                if (weights[i, j, k, 1] != 1) & (weights[i, j, k, 1] != 6) & (weights[i, j, k, 1] != 0):
-                    # set weight for 0weight
-                    # if weights[i, j, k, 1] == 0:
-                    #     weights[i, j, k, 1] = 0.5
-                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0 + 1, k + z0]])
-                    weights[i, j, k, 1] = weights[i, j, k, 1] * abs(math.exp(k_val * (t_val - thr)) - 1)
-                if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
-                    weights[i, j, k, 1] = 6
-                if (weights[i, j, k, 1] > 0) & (weights[i, j, k, 1] < 1):
-                    weights[i, j, k, 1] = 1
-                if weights[i, j, k, 1] == 0:
-                    weights[i, j, k, 1] = 1000
+                if j + y0 + 1 < y1:
+                    weights[i, j, k, 1] = (max(
+                        [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0 + 1, k + z0]])) ** 2
+                    if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
+                        weights[i, j, k, 1] = 6
+                    if (weights[i, j, k, 1] != 1) & (weights[i, j, k, 1] != 6) & (weights[i, j, k, 1] != 0):
+                        # set weight for 0weight
+                        # if weights[i, j, k, 1] == 0:
+                        #     weights[i, j, k, 1] = 0.5
+                        t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0 + 1, k + z0]])
+                        weights[i, j, k, 1] = weights[i, j, k, 1] * abs(math.exp(k_val * (t_val - thr)) - 1)
+                    if (weights[i, j, k, 1] > 1) & (weights[i, j, k, 1] < 6):
+                        weights[i, j, k, 1] = 6
+                    if (weights[i, j, k, 1] > 0) & (weights[i, j, k, 1] < 1):
+                        weights[i, j, k, 1] = 1
+                    if weights[i, j, k, 1] == 0:
+                        weights[i, j, k, 1] = 1000
+                else:
+                    weights[i, j, k, 1] = -1
                 # ##########################################################
                 #             z + 1
-                weights[i, j, k, 2] = (max(
-                    [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0, k + z0 + 1]])) ** 2
-                if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
-                    weights[i, j, k, 2] = 6
-                if (weights[i, j, k, 2] != 1) & (weights[i, j, k, 2] != 6) & (weights[i, j, k, 2] != 0):
+                # lase el hiding
+                if k + z0 + 1 < z1:
 
-                    # set weight for 0weight
+                    weights[i, j, k, 2] = (max(
+                        [dist_marker[i + x0, j + y0, k + z0], dist_marker[i + x0, j + y0, k + z0 + 1]])) ** 2
+                    if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
+                        weights[i, j, k, 2] = 6
+                    if (weights[i, j, k, 2] != 1) & (weights[i, j, k, 2] != 6) & (weights[i, j, k, 2] != 0):
+
+                        # set weight for 0weight
+                        if weights[i, j, k, 2] == 0:
+                            weights[i, j, k, 2] = 0.5
+                        t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0, k + z0 + 1]])
+                        weights[i, j, k, 2] = weights[i, j, k, 2] * abs(math.exp(k_val * (t_val - thr)) - 1)
+                    if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
+                        weights[i, j, k, 2] = 6
+                    if (weights[i, j, k, 2] > 0) & (weights[i, j, k, 2] < 1):
+                        weights[i, j, k, 2] = 1
                     if weights[i, j, k, 2] == 0:
-                        weights[i, j, k, 2] = 0.5
-                    t_val = min([img[i + x0, j + y0, k + z0], img[i + x0, j + y0, k + z0 + 1]])
-                    weights[i, j, k, 2] = weights[i, j, k, 2] * abs(math.exp(k_val * (t_val - thr)) - 1)
-                if (weights[i, j, k, 2] > 1) & (weights[i, j, k, 2] < 6):
-                    weights[i, j, k, 2] = 6
-                if (weights[i, j, k, 2] > 0) & (weights[i, j, k, 2] < 1):
-                    weights[i, j, k, 2] = 1
-                if weights[i, j, k, 2] == 0:
-                    weights[i, j, k, 2] = 1000
+                        weights[i, j, k, 2] = 1000
+                else:
+                    weights[i, j, k, 2] = -1
     # BUILD EDGES TO PIPELINE
-    graph = maxflow.Graph[float](img.shape[1] ** 3, img.shape[1] ** 3)
+
+    # gr = graph1.
+    graph1 = maxflow.Graph[float](img.shape[1] ** 3, img.shape[1] ** 3)
 
     # grid = graph.add_grid_nodes(img.shape)
 
     # length,width,height = img.shape[0],img.shape[1],img.shape[2]
-    grid_ids = graph.add_grid_nodes((l, w, h))
+    grid_ids = graph1.add_grid_nodes((l, w, h))
 
     for i in range(l):
         for j in range(w):
             for k in range(h):
                 ind = grid_ids[i, j, k]
 
-                graph.add_tedge(ind, Bw[i + x0, j + y0, k + z0], Fw[i + x0, j + y0, k + z0])
+                graph1.add_tedge(ind, Bw[i + x0, j + y0, k + z0], Fw[i + x0, j + y0, k + z0], )
                 if i != (l - 1):
                     right = grid_ids[i + 1, j, k]
-                    graph.add_edge(ind, right, weights[i, j, k, 0], weights[i, j, k, 0])
+                    graph1.add_edge(ind, right, weights[i, j, k, 0], weights[i, j, k, 0])
                 if j != (w - 1):
                     bottom = grid_ids[i, j + 1, k]
-                    graph.add_edge(ind, bottom, weights[i, j, k, 1], weights[i, j, k, 1])
+                    graph1.add_edge(ind, bottom, weights[i, j, k, 1], weights[i, j, k, 1])
                 if k != (h - 1):
                     forward = grid_ids[i, j, k + 1]
-                    graph.add_edge(ind, forward, weights[i, j, k, 2], weights[i, j, k, 2])
+                    graph1.add_edge(ind, forward, weights[i, j, k, 2], weights[i, j, k, 2])
 
-    graph.maxflow()
+    graph1.maxflow()
     #
 
-
-
-    sgm = graph.get_grid_segments(grid_ids)
+    sgm = graph1.get_grid_segments(grid_ids)
     res = np.zeros(img.shape)
     for i in range(l):
         for j in range(w):
             for k in range(h):
-                res[i + x0, j + y0, k + z0] = 1
+                if ~(sgm[i, j, k] == False):
+                    res[i + x0, j + y0, k + z0] = 1
+                else:
+                    res[i + x0, j + y0, k + z0] = 0
     return res
     # nodeids = graph.add_nodes(length*width*height)
 
@@ -576,13 +617,53 @@ def gc_method(img,
     pass
 
 
+def post_processing(img,num_dil):
+    x0, x1, y0, y1, z0, z1 = np.where(img == True)[0].min(), np.where(img == True)[0].max(), \
+                             np.where(img == True)[1].min(), np.where(img == True)[1].max(), \
+                             np.where(img == True)[2].min(), np.where(img == True)[2].max()
+
+    a = [l10,l11,l20,l21,l30,l31] = [x0, img.shape[0]-x1,y0, img.shape[1]-y1,z0, img.shape[2]-z1]
+    mn = min(a)
+    res = img.copy()
+    res = morph.binary_fill_holes(res)
+    if mn < num_dil:
+
+        r1 = img.copy()
+        r1[num_dil:-num_dil,num_dil:-num_dil,num_dil:-num_dil] = 0
+
+        r2 = img.copy()
+        r2[:num_dil,:,:] = 0
+        r2[-num_dil:, :, :] = 0
+        r2[:, :num_dil, :] = 0
+        r2[:, -num_dil:, :] = 0
+        r2[:, :, :num_dil] = 0
+        r2[:, :, -num_dil:] = 0
+
+        r2 = morph.binary_dilation(r2,iterations=num_dil)
+        r2 = morph.binary_erosion(r2,iterations=num_dil)
+        r1[num_dil:-num_dil,num_dil:-num_dil,num_dil:-num_dil] = r2[num_dil:-num_dil,num_dil:-num_dil,num_dil:-num_dil]
+        res = r1
+    else:
+        res = morph.binary_dilation(res,iterations=num_dil)
+        res = morph.binary_erosion(res,iterations=num_dil)
+
+    return res
+
+
+
+
+
+
 if __name__ == "__main__":
     im_file = nib.load(sys.argv[1])
 
     # im_seg = nib.load(sys.argv[2])
     res_path = sys.argv[2]
+    out = sys.argv[3]
+
     img = im_file.get_fdata()
-    img = (img - img.min()) / (img.max() - img.min())  # scale to [0,1]
+    #
+    img = (img - img.min()) / (img.max() - img.min())  # scale to [0,255]
     di = 1 / 256
     for i in range(256):
         if i < 255:
@@ -590,33 +671,32 @@ if __name__ == "__main__":
         else:
             img[(img >= di * i) & (img <= di * (i + 1))] = i
 
-    whitemean = preprocessing(img)
+    # whitemean = preprocessing(img)
     _t = 0.4
-    threshold = whitemean * _t
-    print("threshold set to: %f*%f=%f\n", whitemean, _t, threshold)
+    # threshold = whitemean * _t
+    # print("threshold set to: %f*%f=%f\n", whitemean, _t, threshold)
 
-    for i in range(img.shape[0]):
-        for j in range(img.shape[1]):
-            for k in range(img.shape[2]):
-                if img[i,j,k] < threshold + 1:
-                    img[i,j,k] = 0
+    # for i in range(img.shape[0]):
+    #     for j in range(img.shape[1]):
+    #         for k in range(img.shape[2]):
+    #             if img[i, j, k] < threshold + 1:
+    #                 img[i, j, k] = 0
+
+    # nif = nib.Nifti1Image(img.astype(np.int), im_file.affine)
+    # nib.save(nif, res_path + '/' + "rescaled256.nii.gz")
 
 
-    nif = nib.Nifti1Image(img.astype(np.int), im_file.affine)
-    nib.save(nif, res_path + '/' + "rescaled256.nii.gz")
-
-    out = sys.argv[3]
     init_res = grow_middle(img)
 
     init_mask = init_res[0]  # 0
     init_fore = init_res[1]  # 0.8
-    nif = nib.Nifti1Image(init_mask.astype(np.int), im_file.affine)
-    nib.save(nif, res_path + '/' + "initmask.nii.gz")
-    nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
-    nib.save(nif, res_path + '/' + "init_fore.nii.gz")
-    imares = gc_method(img, init_fore, init_mask, threshold, whitemean, 2.3)
-
-    nif = nib.Nifti1Image(imares, im_file.affine)
+    # nif = nib.Nifti1Image(init_mask.astype(np.int), im_file.affine)
+    # nib.save(nif, res_path + '/' + "initmask.nii.gz")
+    # nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
+    # nib.save(nif, res_path + '/' + "init_fore.nii.gz")
+    imares = gc_method(img, init_fore, init_mask, 0, 0, 2.3)
+    imares = post_processing(imares,5)
+    nif = nib.Nifti1Image(imares.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + out)
 
     # imares = sg.morphological_chan_vese(img, iterations=2, init_level_set=imares > 0)
