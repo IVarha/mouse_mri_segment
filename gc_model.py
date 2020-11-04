@@ -460,12 +460,12 @@ def gc_method(img,
 
     # get label > thr
     label = img > (thr * 1.26)
-    x0, x1, y0, y1, z0, z1 = np.where(label == True)[0].min(), np.where(label == True)[0].max(), \
-                             np.where(label == True)[1].min(), np.where(label == True)[1].max(), \
-                             np.where(label == True)[2].min(), np.where(label == True)[2].max()
-    # x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
-    #                          np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
-    #                          np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
+    # x0, x1, y0, y1, z0, z1 = np.where(label == True)[0].min(), np.where(label == True)[0].max(), \
+    #                          np.where(label == True)[1].min(), np.where(label == True)[1].max(), \
+    #                          np.where(label == True)[2].min(), np.where(label == True)[2].max()
+    x0, x1, y0, y1, z0, z1 = np.where(init_mask == True)[0].min(), np.where(init_mask == True)[0].max(), \
+                             np.where(init_mask == True)[1].min(), np.where(init_mask == True)[1].max(), \
+                             np.where(init_mask == True)[2].min(), np.where(init_mask == True)[2].max()
     l, w, h = x1 - x0 + 1, y1 - y0 + 1, z1 - z0 + 1
     # GET DISTANCE METRICS
 
@@ -607,7 +607,7 @@ def gc_method(img,
                     res[i + x0, j + y0, k + z0] = 1
                 else:
                     res[i + x0, j + y0, k + z0] = 0
-    return res
+    return [res,[weights,Bw,Fw]]
     # nodeids = graph.add_nodes(length*width*height)
 
     # # add grid
@@ -663,13 +663,7 @@ if __name__ == "__main__":
 
     img = im_file.get_fdata()
     #
-    img = (img - img.min()) / (img.max() - img.min())  # scale to [0,255]
-    di = 1 / 256
-    for i in range(256):
-        if i < 255:
-            img[(img >= di * i) & (img < di * (i + 1))] = i
-        else:
-            img[(img >= di * i) & (img <= di * (i + 1))] = i
+
 
     # whitemean = preprocessing(img)
     _t = 0.4
@@ -686,18 +680,32 @@ if __name__ == "__main__":
     # nib.save(nif, res_path + '/' + "rescaled256.nii.gz")
 
 
-    init_res = grow_middle(img)
-
-    init_mask = init_res[0]  # 0
-    init_fore = init_res[1]  # 0.8
-    # nif = nib.Nifti1Image(init_mask.astype(np.int), im_file.affine)
-    # nib.save(nif, res_path + '/' + "initmask.nii.gz")
-    # nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
-    # nib.save(nif, res_path + '/' + "init_fore.nii.gz")
-    imares = gc_method(img, init_fore, init_mask, 0, 0, 2.3)
-    imares = post_processing(imares,5)
-    nif = nib.Nifti1Image(imares.astype(np.int), im_file.affine)
+    init_res = grow_middle(img,[0.5,4],0.9,2)
+    # nif = nib.Nifti1Image(init_res.astype(np.int), im_file.affine)
+    # nib.save(nif, res_path + '/' + "ini222343tmask.nii.gz")
+    init_mask = init_res[0] > 0  # 0
+    init_fore = init_res[1] > 0  # 0.8
+    img = (img - img.min()) / (img.max() - img.min())  # scale to [0,255]
+    # di = 1 / 256
+    # for i in range(256):
+    #     if i < 255:
+    #         img[(img >= di * i) & (img < di * (i + 1))] = i
+    #     else:
+    #         img[(img >= di * i) & (img <= di * (i + 1))] = i
+    img = img*255
+    nif = nib.Nifti1Image(init_mask.astype(np.int), im_file.affine)
+    nib.save(nif, res_path + '/' + "init_fore.nii.gz")
+    nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
+    nib.save(nif, res_path + '/' + "init_mask.nii.gz")
+    imares = gc_method(img, init_fore, init_mask, 0, 0, -2)
+    imares2 = post_processing(imares[0],5)
+    nif = nib.Nifti1Image(imares2.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + out)
+
+    nif = nib.Nifti1Image(imares[1][1].astype(np.int), im_file.affine)
+    nib.save(nif, res_path + '/' + "BW.nii.gz")
+    nif = nib.Nifti1Image(imares[1][2].astype(np.int), im_file.affine)
+    nib.save(nif, res_path + '/' + "Wm.nii.gz")
 
     # imares = sg.morphological_chan_vese(img, iterations=2, init_level_set=imares > 0)
     # imares = morph.binary_fill_holes(imares)

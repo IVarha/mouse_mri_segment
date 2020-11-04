@@ -2,12 +2,8 @@ import sys
 
 import nibabel as nib
 import numpy as np
-import scipy.ndimage.measurements as measurements
 import scipy.ndimage.morphology as morph
-import skimage.segmentation as sg
-
-import segment_mouse
-
+from gc_model import post_processing
 if __name__ == "__main__":
     work_path = sys.argv[1]
     im_file = nib.load(sys.argv[1] + "/"+ sys.argv[2])
@@ -16,8 +12,9 @@ if __name__ == "__main__":
     img = im_file.get_fdata()
 
     img = img > 0
-    img = morph.binary_dilation(img,iterations=thresh)
-    img = morph.binary_erosion(img, iterations=thresh)
+    if thresh > 0:
+        img = post_processing(img,thresh)
+        img = post_processing(img, thresh)
     img = img.astype(np.int8)
     nif = nib.Nifti1Image(img, im_file.affine)
     nib.save(nif, work_path + '/' + out)

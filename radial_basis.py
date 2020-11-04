@@ -10,6 +10,8 @@ import scipy.ndimage.measurements as measurements
 def histogram_remove(img):
     i2 = np.zeros(img.shape)
 
+
+
 def combine_image(images):
     res = None
     for i in images:

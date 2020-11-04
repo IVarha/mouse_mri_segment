@@ -9,7 +9,7 @@ import skimage.segmentation as sg
 import segment_mouse
 
 
-def grow_middle(img):
+def grow_middle(img,start_end, thresh, num_div):
     # center of mass
     center = measurements.center_of_mass(img)
     center = [round(x) for x in center]
@@ -23,20 +23,21 @@ def grow_middle(img):
     if dy < 1:
         dy = 2
     zm = center[2]
-    dz = round(img.shape[2] / 20)
-    if dz < 1:
-        dz = 2
+    dz1 = round(img.shape[2] / 20)
+    if dz1 < 1:
+        dz1 = 2
     mask[:, :, :] = 0
 
-    mask[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz:zm + dz] = 1
+    mask[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz1:zm + dz1] = 1
     # -----------------------------------------------------------------
     mask = sg.morphological_chan_vese(img, iterations=25, init_level_set=mask > 0, lambda2=2)
 
-    images = segment_mouse.cv_model(img, init_mask=mask, num_divisions=5, num_iterations=40, start_end=[0.5, 4])
+    #images = segment_mouse.cv_model(img, init_mask=mask, num_divisions=num_div, num_iterations=100, start_end=start_end)
 
-    mask = segment_mouse.combine_image(images)
-    mask2 = mask>0.8
-    mask1 = mask > 0
+
+    mask1= sg.morphological_chan_vese(img, iterations=100, init_level_set=mask > 0, lambda1=0.5,lambda2=4)
+    mask2 = sg.morphological_chan_vese(img, iterations=100, init_level_set=mask > 0, lambda1=4,lambda2=0.5)
+
     return [mask1, mask2, center]
 
 if __name__ == "__main__":
@@ -45,11 +46,13 @@ if __name__ == "__main__":
     res_path = sys.argv[2]
     have_t = False
     thresh = 0
+    out_file = sys.argv[3]
+    ou_mask = sys.argv[4]
     try:
-        if sys.argv[3] == "none":
+        if sys.argv[5] == "none":
             have_t = True
         else:
-            thresh = float(sys.argv[3])
+            thresh = float(sys.argv[5])
     except:
         pass
     # Measure center of mass of image and create a small mask for which is CV initialisation
@@ -74,10 +77,10 @@ if __name__ == "__main__":
     imares[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz:zm + dz] = 1
     # -----------------------------------------------------------------
     imares = sg.morphological_chan_vese(img, iterations=25, init_level_set=imares > 0, lambda2=2)
+    if ou_mask != "none":
+        images = segment_mouse.cv_model(img, init_mask=imares, num_divisions=3, num_iterations=100, start_end=[0.5, 4])
+        imares = segment_mouse.combine_image(images)
 
-    images = segment_mouse.cv_model(img, init_mask=imares, num_divisions=3, num_iterations=100, start_end=[0.5, 4])
-
-    imares = segment_mouse.combine_image(images)
     nif = nib.Nifti1Image(imares, im_file.affine)
     imares = imares > 0
     imares2 = np.zeros(img.shape)
@@ -90,23 +93,24 @@ if __name__ == "__main__":
                     else:
                         imares2[i, j, k] = 0
     else:
-        for i in range(imares.shape[0]):
-            for j in range(imares.shape[1]):
-                for k in range(imares.shape[2]):
-                    if (imares[i, j, k] > 0):
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                for k in range(img.shape[2]):
                         imares2[i, j, k] = img[i, j, k]
-                    else:
-                        imares2[i, j, k] = 0
 
     imares = imares > 0
     imares = morph.binary_dilation(imares, iterations=5)
 
 
     nif = nib.Nifti1Image(imares.astype(np.int8), im_file.affine)
+#save bfc_mask
 
-    nib.save(nif, res_path + '/mri_bfc_mask_test.nii.gz')
+    if ou_mask != "none":
+        nib.save(nif, res_path + '/' + ou_mask)
 
     nif = nib.Nifti1Image(imares2, im_file.affine)
-    nib.save(nif, res_path + '/mri2.nii.gz')
+    #save file
+
+    nib.save(nif, res_path + '/' + out_file)
 
 
