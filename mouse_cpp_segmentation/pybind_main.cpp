@@ -14,10 +14,24 @@ int add(int i, int j) {
 }
 
 
-void tm2(py::)
+void tm2(py::array_t<int>& a){
+    auto buf  = a.request();
+    int* pt = (int*) buf.ptr;
+    pt[0] = 10;
+
+}
 
 void test_method(){
+    py::array_t<int> a = py::array_t<int>(2);
+    auto buf  = a.request();
 
+    int* pt = (int*) buf.ptr;
+
+    pt[0] = 1;
+    pt[1] = 4;
+
+    tm2(a);
+    std::cout << pt[0] <<std::endl;
 
 }
 
@@ -116,10 +130,10 @@ py::array_t<double> abs_grad(py::array_t<int> u){
 
 
     for (int i = 0;i< X;i++){
-        auto tmp_2 = std::vector<std::vector<double>>();
+
         for (int j = 0;j< Y;j++){
 
-            auto tmp_1 = std::vector<double>();
+
 
             for (int k = 0;k< Z;k++){
 
@@ -295,7 +309,10 @@ m.def("add", py::vectorize(add));
         C++ impl of morphological CV
 
     )pbdoc");
+    m.def("test_method", &test_method, R"pbdoc(
+        C++ impl of morphological CV
 
+    )pbdoc");
 
     m.def("morph_cv", &morph_cv,"image"_a,"init_level_set"_a,"iterations"_a,"smoothing"_a=1,"lambda1"_a=1
             ,"lambda2"_a=1, R"pbdoc(
