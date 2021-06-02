@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="pybind11"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\external\;CMake Files\external\pybind11-2.6\;CMake Files\external\pybind11-2.6\tools\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/tmp/tmp.xbvtgYypiK/cmake-build-debug/external/pybind11-2.6"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j24 -f &quot;/tmp/tmp.xbvtgYypiK/cmake-build-debug/external/pybind11-2.6/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j24 -f &quot;/tmp/tmp.xbvtgYypiK/cmake-build-debug/external/pybind11-2.6/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j24 -f &quot;/tmp/tmp.xbvtgYypiK/cmake-build-debug/external/pybind11-2.6/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j24 -f &quot;/tmp/tmp.xbvtgYypiK/cmake-build-debug/external/pybind11-2.6/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/tmp/tmp.xbvtgYypiK/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.xbvtgYypiK/external/pybind11-2.6/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\external\pybind11-2.6\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.xbvtgYypiK/external/pybind11-2.6/tools/FindPythonLibsNew.cmake">
+			<Option virtualFolder="CMake Files\external\pybind11-2.6\tools\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.xbvtgYypiK/external/pybind11-2.6/tools/pybind11Common.cmake">
+			<Option virtualFolder="CMake Files\external\pybind11-2.6\tools\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.xbvtgYypiK/external/pybind11-2.6/tools/pybind11Tools.cmake">
+			<Option virtualFolder="CMake Files\external\pybind11-2.6\tools\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="mouse_segmentation_cpp" targetName="Mouse_C" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="64887dfc-4f83-44fb-86ac-792f446f4410" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/mouse_cpp_segmentation.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CMakeCCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CMakeSystem.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.10.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/flags.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/link.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Mouse_C.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/feature_tests.cxx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/external/pybind11-2.6/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/external/pybind11-2.6/CMakeFiles/progress.marks" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/external/pybind11-2.6/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/external/pybind11-2.6/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/external/pybind11-2.6/pybind11.cbp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/mouse_segmentation_cpp.cbp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.appveyor.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.clang-tidy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.cmake-format.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/CONTRIBUTING.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/ISSUE_TEMPLATE/bug-report.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/ISSUE_TEMPLATE/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/ISSUE_TEMPLATE/feature-request.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/ISSUE_TEMPLATE/question.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/dependabot.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/labeler.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/labeler_merged.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/pull_request_template.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/workflows/ci.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/workflows/configure.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/workflows/format.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/workflows/labeler.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.github/workflows/pip.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.pre-commit-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/.readthedocs.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/MANIFEST.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/README.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/Doxyfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/_static/theme_overrides.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/chrono.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/custom.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/eigen.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/functional.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/overview.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/stl.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/cast/strings.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/classes.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/embedding.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/exceptions.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/functions.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/misc.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/pycpp/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/pycpp/numpy.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/pycpp/object.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/pycpp/utilities.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/advanced/smart_ptrs.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/basics.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/benchmark.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/benchmark.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/changelog.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/classes.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/cmake/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/compiling.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/conf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/faq.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/index.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/installing.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/limitations.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/pybind11-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/pybind11_vs_boost_python1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/pybind11_vs_boost_python1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/pybind11_vs_boost_python2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/pybind11_vs_boost_python2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/reference.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/release.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/docs/upgrade.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/attr.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/buffer_info.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/cast.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/chrono.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/common.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/complex.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/class.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/common.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/descr.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/init.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/internals.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/detail/typeid.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/eigen.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/embed.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/eval.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/functional.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/iostream.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/numpy.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/operators.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/options.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/pybind11.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/pytypes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/stl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/include/pybind11/stl_bind.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/__main__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/_version.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/_version.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/commands.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/py.typed" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/setup_helpers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pybind11/setup_helpers.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/pyproject.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/setup.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/conftest.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/constructor_stats.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/cross_module_gil_utils.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/env.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/extra_python_package/pytest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/extra_python_package/test_files.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/extra_setuptools/pytest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/extra_setuptools/test_setuphelper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/local_bindings.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/object.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/pybind11_cross_module_tests.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/pybind11_tests.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/pybind11_tests.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/pytest.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_async.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_async.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_buffers.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_buffers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_builtin_casters.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_builtin_casters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_call_policies.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_call_policies.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_callbacks.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_callbacks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_chrono.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_chrono.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_class.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_class.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/embed.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/installed_embed/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/installed_function/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/installed_target/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/subdirectory_embed/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/subdirectory_function/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/subdirectory_target/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_cmake_build/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_constants_and_functions.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_constants_and_functions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_copy_move.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_copy_move.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_custom_type_casters.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_custom_type_casters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_docstring_options.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_docstring_options.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_eigen.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_eigen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_embed/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_embed/catch.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_embed/external_module.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_embed/test_interpreter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_embed/test_interpreter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_enum.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_enum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_eval.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_eval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_eval_call.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_exceptions.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_factory_constructors.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_factory_constructors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_gil_scoped.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_gil_scoped.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_iostream.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_iostream.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_kwargs_and_defaults.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_kwargs_and_defaults.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_local_bindings.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_local_bindings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_methods_and_attributes.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_methods_and_attributes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_modules.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_modules.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_multiple_inheritance.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_multiple_inheritance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_array.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_array.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_dtypes.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_dtypes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_vectorize.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_numpy_vectorize.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_opaque_types.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_opaque_types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_operator_overloading.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_operator_overloading.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_pickling.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_pickling.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_pytypes.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_pytypes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_sequences_and_iterators.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_sequences_and_iterators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_smart_ptr.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_smart_ptr.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_stl.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_stl.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_stl_binders.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_stl_binders.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_tagbased_polymorphic.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_tagbased_polymorphic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_union.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_union.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_virtual_functions.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tests/test_virtual_functions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/FindCatch.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/FindEigen3.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/FindPythonLibsNew.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/check-style.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/cmake_uninstall.cmake.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/libsize.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/pybind11Common.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/pybind11Config.cmake.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/pybind11NewTools.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/pybind11Tools.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/pyproject.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/setup_global.py.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/pybind11-2.6/tools/setup_main.py.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/.clang-format" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/.clang-tidy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/INSTALL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/appveyor.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/async_bench.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/bench.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/formatter-bench.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/latency.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/bench/utils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/ide.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/pch.h.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/spdlog.pc.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/spdlogCPack.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/spdlogConfig.cmake.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/utils.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/cmake/version.rc.in" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/example/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/example/example.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/async.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/async_logger-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/async_logger.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/cfg/argv.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/cfg/env.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/cfg/helpers-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/cfg/helpers.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/common-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/common.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/backtracer-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/backtracer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/circular_q.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/console_globals.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/file_helper-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/file_helper.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/fmt_helper.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/log_msg-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/log_msg.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/log_msg_buffer-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/log_msg_buffer.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/mpmc_blocking_q.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/null_mutex.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/os-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/os.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/periodic_worker-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/periodic_worker.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/registry-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/registry.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/synchronous_factory.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/tcp_client-windows.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/tcp_client.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/thread_pool-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/thread_pool.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/details/windows_include.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bin_to_hex.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/LICENSE.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/chrono.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/color.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/compile.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/core.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/format-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/format.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/locale.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/os.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/ostream.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/posix.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/printf.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/bundled/ranges.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/chrono.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/fmt.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fmt/ostr.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/formatter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/fwd.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/logger-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/logger.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/pattern_formatter-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/pattern_formatter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/android_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/ansicolor_sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/ansicolor_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/base_sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/base_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/basic_file_sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/basic_file_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/daily_file_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/dist_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/dup_filter_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/msvc_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/null_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/ostream_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/ringbuffer_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/rotating_file_sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/rotating_file_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/stdout_color_sinks-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/stdout_color_sinks.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/stdout_sinks-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/stdout_sinks.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/syslog_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/systemd_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/tcp_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/win_eventlog_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/wincolor_sink-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/sinks/wincolor_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/spdlog-inl.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/spdlog.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/stopwatch.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/tweakme.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/include/spdlog/version.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/logos/jetbrains-variant-4.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/scripts/extract_version.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/scripts/format.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/async.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/cfg.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/color_sinks.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/file_sinks.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/fmt.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/spdlog.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/src/stdout_sinks.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/catch.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/catch.license" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/includes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_async.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_backtrace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_cfg.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_create_dir.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_daily_logger.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_dup_filter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_errors.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_eventlog.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_file_helper.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_file_logging.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_fmt_helper.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_macros.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_misc.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_mpmc_q.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_pattern_formatter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_registry.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_sink.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_stdout_api.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_stopwatch.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_systemd.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/test_time_point.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/utils.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/external/spdlog-1.8.2/tests/utils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pybind_main.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../dice_scores.py" beforeDir="false" afterPath="$PROJECT_DIR$/../dice_scores.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gc_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gc_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../radial_basis.py" beforeDir="false" afterPath="$PROJECT_DIR$/../radial_basis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../remove_backgr_mouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/../remove_backgr_mouse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../segment_mouse.py" beforeDir="false" afterPath="$PROJECT_DIR$/../segment_mouse.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1tJBfp7hDWoKbTIotDADrpHEMEn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Mouse_C" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="mouse_segmentation_cpp" TARGET_NAME="Mouse_C" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="64887dfc-4f83-44fb-86ac-792f446f4410" name="Default Changelist" comment="" />
+      <created>1622477421634</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1622477421634</updated>
+      <workItem from="1622477427759" duration="17980000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
