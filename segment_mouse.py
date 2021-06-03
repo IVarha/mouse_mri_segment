@@ -1,18 +1,19 @@
-import skimage.segmentation as sg
+import numpy
+import skimage.segmentation.morphsnakes as sg
 import scipy.ndimage.morphology as morph
 import skimage.measure as measure
 import nibabel as nib
 import sys
 import numpy as np
 import scipy.ndimage.measurements as measurements
-
+import Mouse_C
 
 def cv_model(image,init_mask, num_divisions,num_iterations,start_end):
 
     dt = (start_end[1] - start_end[0])/num_divisions
     res = []
     for i in range(num_divisions):
-        mares = sg.morphological_chan_vese(image, iterations=num_iterations, init_level_set=init_mask > 0,lambda1=start_end[0] + i*dt,lambda2=start_end[1]- i*dt)
+        mares = Mouse_C.morph_cv(image, iterations=num_iterations, init_level_set=init_mask > 0,lambda1=start_end[0] + i*dt,lambda2=start_end[1]- i*dt)
         res.append(mares)
 
     return res
@@ -54,8 +55,10 @@ if __name__ == "__main__":
     imares[:, :, :] = 0
 
     # imares[xm - 20:xm + 20, ym - 20:ym + 20, zm - 2:zm + 2] = 1
+    a = numpy.array([[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]])
+    #Mouse_C.test_method()
     imares[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz:zm + dz] = 1
-    imares = sg.morphological_chan_vese(img, iterations=25, init_level_set=imares > 0, lambda2=2)
+    imares = Mouse_C.morph_cv(img, iterations=25, init_level_set=imares > 0, lambda2=2)
     images = cv_model(img,init_mask=imares,num_divisions=10,num_iterations=100,start_end=[0.5,4])
 
     imares = combine_image(images)
@@ -65,7 +68,7 @@ if __name__ == "__main__":
 
 
 
-    imares = sg.morphological_chan_vese(img, iterations=2, init_level_set=imares > 0)
+    imares = Mouse_C.morph_cv(img, iterations=2, init_level_set=imares > 0)
     imares = morph.binary_fill_holes(imares)
     imares = morph.binary_erosion(imares)
     imares = morph.binary_dilation(imares)

@@ -5,7 +5,7 @@ import maxflow
 import nibabel as nib
 import numpy as np
 import scipy.ndimage.morphology as morph
-
+import Mouse_C
 from remove_backgr_mouse import grow_middle
 
 
@@ -695,9 +695,13 @@ if __name__ == "__main__":
     img = img*255
     nif = nib.Nifti1Image(init_mask.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + "init_fore.nii.gz")
+    ####load
+    nif = nib.load(res_path + "/" + "mri_bfc_mask_test.nii.gz")
+    init_mask = nif.get_fdata()
+    ####l
     nif = nib.Nifti1Image(init_fore.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + "init_mask.nii.gz")
-    imares = gc_method(img, init_fore, init_mask, 0, 0, -2)
+    imares = gc_method(img, init_fore, init_mask, 0, 0, 2.3)
     imares2 = post_processing(imares[0],5)
     nif = nib.Nifti1Image(imares2.astype(np.int), im_file.affine)
     nib.save(nif, res_path + '/' + out)

@@ -6,6 +6,7 @@ import scipy.ndimage.measurements as measurements
 import scipy.ndimage.morphology as morph
 import skimage.segmentation as sg
 
+import Mouse_C
 import segment_mouse
 
 
@@ -30,13 +31,13 @@ def grow_middle(img,start_end, thresh, num_div):
 
     mask[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz1:zm + dz1] = 1
     # -----------------------------------------------------------------
-    mask = sg.morphological_chan_vese(img, iterations=25, init_level_set=mask > 0, lambda2=2)
+    mask = Mouse_C.morph_cv(img, iterations=25, init_level_set=mask > 0, lambda2=2)
 
     #images = segment_mouse.cv_model(img, init_mask=mask, num_divisions=num_div, num_iterations=100, start_end=start_end)
 
 
-    mask1= sg.morphological_chan_vese(img, iterations=100, init_level_set=mask > 0, lambda1=0.5,lambda2=4)
-    mask2 = sg.morphological_chan_vese(img, iterations=100, init_level_set=mask > 0, lambda1=4,lambda2=0.5)
+    mask1= Mouse_C.morph_cv(img, iterations=100, init_level_set=mask > 0, lambda1=0.5,lambda2=4)
+    mask2 = Mouse_C.morph_cv(img, iterations=100, init_level_set=mask > 0, lambda1=4,lambda2=0.5)
 
     return [mask1, mask2, center]
 
@@ -76,7 +77,8 @@ if __name__ == "__main__":
 
     imares[xm - dx:xm + dx, ym - dy:ym + dy, zm - dz:zm + dz] = 1
     # -----------------------------------------------------------------
-    imares = sg.morphological_chan_vese(img, iterations=25, init_level_set=imares > 0, lambda2=2)
+    im2 = imares = Mouse_C.morph_cv(img, iterations=1, init_level_set=imares > 0, lambda2=2)
+    imares = Mouse_C.morph_cv(img, iterations=1, init_level_set=imares > 0, lambda2=2)
     if ou_mask != "none":
         images = segment_mouse.cv_model(img, init_mask=imares, num_divisions=3, num_iterations=100, start_end=[0.5, 4])
         imares = segment_mouse.combine_image(images)
