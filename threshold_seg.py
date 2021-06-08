@@ -30,7 +30,7 @@ def combine_image(images):
 if __name__ == "__main__":
     sub_dir = sys.argv[1]
 
-    treshold = float(sys.argv[4])
+    treshold = float(sys.argv[2])
 
 
 
