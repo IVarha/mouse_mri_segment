@@ -13,20 +13,20 @@ im_name=$work_dir/names
 name="mri.nii.gz"
 # segment alex data
 for d in $work_dir//$prefix_subdirs*; do
-    echo "$d"
-    echo "$d/$name"
-    #
-    python3 filter.py $d/mri.nii.gz $d mri2.nii.gz 3
-#    RESULT MASK FOR Bias field correction
-
-    python3 remove_backgr_mouse.py $d/mri2.nii.gz $d mri2.nii.gz mri_bfc_mask_test.nii.gz none
-
-    python3 remove_backgr_mouse.py $d/mri.nii.gz $d mri2.nii.gz none none
-#    BIAS FIELD CORRECTION
-    ./bfc.sh $d $d/mri2.nii.gz $d/mri_bfc_mask_test.nii.gz
+#    echo "$d"
+#    echo "$d/$name"
+#    #
+#    python3 filter.py $d/mri.nii.gz $d mri2.nii.gz 3
+##    RESULT MASK FOR Bias field correction
 #
+#    python3 remove_backgr_mouse.py $d/mri2.nii.gz $d mri2.nii.gz mri_bfc_mask_test.nii.gz none
+#
+#    python3 remove_backgr_mouse.py $d/mri.nii.gz $d mri2.nii.gz none none
+##    BIAS FIELD CORRECTION
+#    ./bfc.sh $d $d/mri2.nii.gz $d/mri_bfc_mask_test.nii.gz
+##
 #    SEGMENTS IMAGE
-    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d
+    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d 0.5
     # graph_cut segmentation
     python3 gc_model.py $d/bfc.nii.gz $d gc.nii.gz
 #    FILL HOLES

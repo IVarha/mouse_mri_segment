@@ -34,6 +34,8 @@ if __name__ == "__main__":
     res_path = sys.argv[3]
     img = im_file.get_fdata()
 
+    treshold = float(sys.argv[4])
+
 
     cent = measurements.center_of_mass(img)
     cent = [round(x) for x in cent]
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     imares = combine_image(images)
     nif = nib.Nifti1Image(imares, im_file.affine)
     nib.save(nif, res_path + '/combined.nii.gz')
-    imares = imares > 0.9
+    imares = imares > treshold
 
 
 
