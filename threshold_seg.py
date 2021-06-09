@@ -31,7 +31,7 @@ if __name__ == "__main__":
     sub_dir = sys.argv[1]
 
     treshold = float(sys.argv[2])
-
+    iterations = int(sys.argv[3])
 
 
 
@@ -43,8 +43,10 @@ if __name__ == "__main__":
 
 
     imares = morph.binary_fill_holes(imares)
-    imares = morph.binary_erosion(imares)
-    imares = morph.binary_dilation(imares)
+    imares = morph.binary_dilation(imares, iterations=iterations)
+    imares = morph.binary_fill_holes(imares)
+    imares = morph.binary_erosion(imares, iterations=iterations)
+
     imares = imares.astype(np.int8)
 
 

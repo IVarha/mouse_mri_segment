@@ -26,7 +26,7 @@ for d in $work_dir//$prefix_subdirs*; do
     ./bfc.sh $d $d/mri2.nii.gz $d/mri_bfc_mask_test.nii.gz
 #
 #    SEGMENTS IMAGE
-    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d 0.5
+    python3 segment_mouse.py $d/bfc.nii.gz $d/bfc.nii.gz $d 0.5 2
     # graph_cut segmentation
     python3 gc_model.py $d/bfc.nii.gz $d gc.nii.gz
 #    FILL HOLES

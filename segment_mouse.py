@@ -35,7 +35,7 @@ if __name__ == "__main__":
     img = im_file.get_fdata()
 
     treshold = float(sys.argv[4])
-
+    iterations = int(sys.argv[5])
 
     cent = measurements.center_of_mass(img)
     cent = [round(x) for x in cent]
@@ -72,8 +72,9 @@ if __name__ == "__main__":
 
     imares = Mouse_C.morph_cv(img, iterations=2, init_level_set=imares > 0)
     imares = morph.binary_fill_holes(imares)
-    imares = morph.binary_erosion(imares)
-    imares = morph.binary_dilation(imares)
+    imares = morph.binary_dilation(imares,iterations=iterations)
+    imares = morph.binary_fill_holes(imares)
+    imares = morph.binary_erosion(imares,iterations=iterations)
     imares = imares.astype(np.int8)
 
 
